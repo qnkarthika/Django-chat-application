@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat with {{ other_user.username }}</title>
+    <style>
+        body {
+            display: flex;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+        
+        #chat-space {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+        }
+        #messages {
+            flex: 1;
+            overflow-y: auto;
+            margin-bottom: 20px;
+            padding: 10px;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+            max-height: calc(100vh - 200px);
+        }
+        #messages p {
+            margin: 10px 0;
+        }
+        #message-input {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            background-color: #f1f1f1;
+            border-top: 1px solid #ddd;
+        }
+        #message-input textarea {
+            width: 100%;
+            padding: 10px;
+            margin-right: 10px;
+            border-radius: 5px;
+            resize: none;
+            height: 40px;
+        }
+        #message-input button {
+            padding: 10px 15px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        #message-input button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <ul>
+            {% for user in users %}
+                <li class="{% if user.username == request.user.username %}current-user{% endif %}">
+                    <a href="/chat/{{user.username}}/">{{user.username}}</a>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <div id="chat-space">
+        <h1>Chat with {{ other_user.username }}</h1>
+        <div id="messages">
+            {% for message in messages %}
+                <p><strong>{{ message.sender }}:</strong> {{ message.content }}</p>
+            {% endfor %}
+        </div>
+        <form method="POST" id="message-input">
+            {% csrf_token %}
+            <textarea name="message" rows="3" placeholder="Type a message..."></textarea>
+            <button type="submit">Send</button>
+        </form>
+    </div>
+</body>
+</html>

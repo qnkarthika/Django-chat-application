@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registered Users</title>
+    <style>
+        body {
+            display: flex;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+        #contacts {
+            width: 250px;
+            background-color: #f1f1f1;
+            padding: 10px;
+            box-sizing: border-box;
+            border-right: 1px solid #ddd;
+            overflow-y: auto;
+        }
+        #contacts h2 {
+            margin-top: 0;
+        }
+        #contacts ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        #contacts ul li {
+            margin: 10px 0;
+        }
+        #contacts ul li a {
+            text-decoration: none;
+            color: #333;
+        }
+        #contacts ul li.current-user {
+            background-color: #4CAF50;
+            color: white;
+            border-radius: 5px;
+        }
+        #chat-space {
+            flex: 1;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+        }
+        #chat-space h1 {
+            margin: 0;
+            padding-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div id="contacts">
+        <h2>Registered users</h2>
+        <ul>
+            {% for user in users %}
+                <li class="{% if user.username == request.user.username %}current-user{% endif %}">
+                    <a href="/chat/{{user.username}}/">{{user.username}}</a>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <div id="chat-space">
+        <h1>Welcome {{request.user.username}}</h1>
+    </div>
+</body>
+</html>
