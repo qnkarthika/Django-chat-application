@@ -130,3 +130,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_URL='/accounts/login'
 LOGIN_REDIRECT_URL='/chat/'
+CSRF_TRUSTED_ORIGINS = [
+    'https://django-chat-application-1.onrender.com',
+]
